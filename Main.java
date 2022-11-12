@@ -5,17 +5,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		
+		Stream.generate(() -> Math.random()).limit(3).forEach(System.out::println);;
+		
 		List<Employee> employees = List.of(
 				new Employee(1, "jeevi", 21, 300000),
-				new Employee(2, "jee", 26, 450000),
+				new Employee(2, "jee", 21, 450000),
 				new Employee(3, "Aii", 32, 900000));
 				
+		employees.stream().map(Employee::getAge).distinct().forEach(System.out::println);
+		
 		employees.stream().
 		sorted((first, second) -> first.getName().compareTo(second.getName())).
 		forEach(employee -> System.out.println( "OrderedEmployee : " + employee.getName()));
@@ -25,7 +30,7 @@ public class Main {
 		forEach(employee -> System.out.println(employee.toString()));
 		
 		Object salary = employees.stream().
-		map(employee -> employee.getSalary()).
+		map(Employee::getSalary).
 		reduce((sum,emp) -> sum+emp );
 		System.out.println( "FullEmployeeSalary1 = " +salary);
 		
@@ -52,7 +57,6 @@ public class Main {
 		customers.add(new Customer("b", "2"));
 		customers.add(new Customer("c", "3"));
 		System.out.println(customers.toString());
-		
-	//	Collections.sort((List<Customer>) customers);
+	
 	}
 }
